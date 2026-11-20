@@ -1,0 +1,10 @@
+#! /usr/bin/env bash
+
+# Copy over all static sources.
+# Currently works by copying over everything and then deleting ts files
+
+for item in src/*; do
+  cp --recursive "$item" dist/
+done
+
+find dist/ -name '*.ts' -exec rm {} \;

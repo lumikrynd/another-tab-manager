@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "My Tabs Tree",
+  "description": "Tabs tree extension to replace the build in tabs.",
+  "version": "0.1",
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "160"
+    }
+  },
+  "permissions": ["tabs"]
+}
