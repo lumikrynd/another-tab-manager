@@ -8,5 +8,12 @@
       "strict_min_version": "160"
     }
   },
-  "permissions": ["tabs"]
+
+  "permissions": ["storage", "tabs"],
+
+  "sidebar_action": {
+    "default_icon": "icons/bookmark-book.svg",
+    "default_title" : "my-sidebar",
+    "default_panel": "sidebar/panel.html"
+  }
 }
