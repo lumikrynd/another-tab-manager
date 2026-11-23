@@ -1,67 +1,54 @@
-let myWindowId: number;
 const contentBox = _getContentBox()
 
-/*
-Make the content box editable as soon as the user mouses over the sidebar.
-*/
-window.addEventListener("mouseover", () => {
-  contentBox.setAttribute("contenteditable", "true");
-});
 
-/*
-When the user mouses out, save the current contents of the box.
-*/
-window.addEventListener("mouseout", () => {
-  contentBox.setAttribute("contenteditable", "false");
-  browser.tabs
-    .query({ windowId: myWindowId, active: true })
-    .then((tabs) => {
-      let contentToStore: { [key: string]: any; } = {};
-      let key = tabs[0].url ?? "";
-      contentToStore[key] = contentBox.textContent;
-      browser.storage.local.set(contentToStore);
-    });
-});
-
-/*
-Update the sidebar's content.
-
-1) Get the active tab in this sidebar's window.
-2) Get its stored content.
-3) Put it in the content box.
-*/
 function updateContent() {
-  browser.tabs.query({ windowId: myWindowId, active: true })
+  // contentBox.innerHTML = '';
+  // const node = _createTextElement("this is text");
+  // contentBox.appendChild(node)
+
+  browser.tabs.query({ })
     .then((tabs) => {
-      return browser.storage.local.get(tabs[0].url);
-    })
-    .then((storedInfo) => {
-      contentBox.textContent = storedInfo[Object.keys(storedInfo)[0]];
+      contentBox.innerHTML = '';
+      for (const tab of tabs) {
+        const text = _createTabText(tab);
+        const node = _createTextElement(text);
+        contentBox.appendChild(node)
+      }
     });
 }
 
 /*
-Update content when a new tab becomes active.
-*/
-browser.tabs.onActivated.addListener(updateContent);
-
-/*
-Update content when a new page is loaded into a tab.
+Update content when tabs are changed
 */
 browser.tabs.onUpdated.addListener(updateContent);
+browser.tabs.onRemoved.addListener(updateContent);
+browser.tabs.onCreated.addListener(updateContent);
+browser.tabs.onMoved.addListener(updateContent);
+
 
 /*
 When the sidebar loads, get the ID of its window,
 and update its content.
 */
-browser.windows.getCurrent({ populate: true }).then((windowInfo) => {
-  myWindowId = windowInfo.id ?? myWindowId;
-  updateContent();
-});
+updateContent();
+
+function _createTextElement(text: string) {
+    const node = document.createElement("div");
+    node.innerHTML = text;
+    return node;
+}
 
 function _getContentBox(): Element {
   const x = document.querySelector("#content");
   if (x == null)
     throw new Error('no content box???')
   return x
+}
+
+function _createTabText(tab: browser.tabs.Tab): string {
+  const id = tab.id?.toString() ?? "undefined";
+  const title = tab.title ?? "";
+  const window = tab.windowId ?? "?";
+
+  return `${id} (${window}) - "${title}"`
 }
