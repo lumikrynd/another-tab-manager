@@ -21,6 +21,9 @@ body {
 #content > div {
   border: 2px solid #794B0F;
   transition: background-color .2s ease-out;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 #content > :nth-child(odd) {

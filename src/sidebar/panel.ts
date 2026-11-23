@@ -22,6 +22,7 @@ function updateContent() {
 function _createTextElement(text: string) {
     const node = document.createElement("div");
     node.innerHTML = text;
+    node.setAttribute("title", text)
     return node;
 }
 
