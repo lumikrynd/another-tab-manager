@@ -1,11 +1,13 @@
 const contentBox = _getContentBox()
+updateContent();
+
+browser.tabs.onUpdated.addListener(updateContent);
+browser.tabs.onRemoved.addListener(updateContent);
+browser.tabs.onCreated.addListener(updateContent);
+browser.tabs.onMoved.addListener(updateContent);
 
 
 function updateContent() {
-  // contentBox.innerHTML = '';
-  // const node = _createTextElement("this is text");
-  // contentBox.appendChild(node)
-
   browser.tabs.query({ })
     .then((tabs) => {
       contentBox.innerHTML = '';
@@ -16,21 +18,6 @@ function updateContent() {
       }
     });
 }
-
-/*
-Update content when tabs are changed
-*/
-browser.tabs.onUpdated.addListener(updateContent);
-browser.tabs.onRemoved.addListener(updateContent);
-browser.tabs.onCreated.addListener(updateContent);
-browser.tabs.onMoved.addListener(updateContent);
-
-
-/*
-When the sidebar loads, get the ID of its window,
-and update its content.
-*/
-updateContent();
 
 function _createTextElement(text: string) {
     const node = document.createElement("div");
