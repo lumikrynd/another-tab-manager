@@ -30,9 +30,9 @@ function createTabElement(
   window: browser.windows.Window) {
   const node = document.createElement("div");
 
-  if (tab.active) {
-    const attribute = (tab.windowId == window.id) ? "current" : "other";
-    node.setAttribute("active", attribute);
+  const tabState = getTabState(tab, window);
+  if (tabState) {
+    node.setAttribute("state", tabState);
   }
 
   const text = createTabText(tab);
@@ -45,6 +45,13 @@ function createTabElement(
     }
   })
   return node;
+}
+
+function getTabState(tab: browser.tabs.Tab, window: browser.windows.Window) {
+  if (tab.active) {
+    return (tab.windowId == window.id) ? "current" : "other";
+  }
+  return tab.discarded ?? false ? null : "loaded";
 }
 
 function getContentBox(): Element {

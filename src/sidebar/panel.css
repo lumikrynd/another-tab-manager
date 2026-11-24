@@ -27,10 +27,14 @@ body {
   background-color: grey;
 }
 
-#content > div[active=current] {
+#content > div[state=current] {
   background-color: lightgreen;
 }
 
-#content > div[active=other] {
+#content > div[state=other] {
   background-color: #EE9090;
+}
+
+#content > div[state=loaded] {
+  background-color: darkgrey
 }
