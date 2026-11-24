@@ -12,14 +12,14 @@ function _updateContent() {
     .then((tabs) => {
       contentBox.innerHTML = '';
       for (const tab of tabs) {
-        const text = _createTabText(tab);
-        const node = _createTextElement(text);
+        const node = _createTabElement(tab);
         contentBox.appendChild(node)
       }
     });
 }
 
-function _createTextElement(text: string) {
+function _createTabElement(tab: browser.tabs.Tab) {
+  const text = _createTabText(tab);
   const node = document.createElement("div");
   node.innerHTML = text;
   node.setAttribute("title", text)
