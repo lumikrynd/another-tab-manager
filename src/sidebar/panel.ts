@@ -7,6 +7,10 @@ browser.tabs.onCreated.addListener(_updateContent);
 browser.tabs.onMoved.addListener(_updateContent);
 
 
+function tabSetActive(changeTo: number) {
+  browser.tabs.update(changeTo, { active: true })
+}
+
 function _updateContent() {
   browser.tabs.query({})
     .then((tabs) => {
@@ -23,6 +27,11 @@ function _createTabElement(tab: browser.tabs.Tab) {
   const node = document.createElement("div");
   node.innerHTML = text;
   node.setAttribute("title", text)
+  node.addEventListener("click", _ => {
+    if (tab.id !== undefined) {
+      tabSetActive(tab.id)
+    }
+  })
   return node;
 }
 
