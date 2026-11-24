@@ -1,29 +1,29 @@
-const contentBox = _getContentBox()
-_updateContent();
+const contentBox = getContentBox()
+updateContent();
 
-browser.tabs.onUpdated.addListener(_updateContent);
-browser.tabs.onRemoved.addListener(_updateContent);
-browser.tabs.onCreated.addListener(_updateContent);
-browser.tabs.onMoved.addListener(_updateContent);
+browser.tabs.onUpdated.addListener(updateContent);
+browser.tabs.onRemoved.addListener(updateContent);
+browser.tabs.onCreated.addListener(updateContent);
+browser.tabs.onMoved.addListener(updateContent);
 
 
 function tabSetActive(changeTo: number) {
   browser.tabs.update(changeTo, { active: true })
 }
 
-function _updateContent() {
+function updateContent() {
   browser.tabs.query({})
     .then((tabs) => {
       contentBox.innerHTML = '';
       for (const tab of tabs) {
-        const node = _createTabElement(tab);
+        const node = createTabElement(tab);
         contentBox.appendChild(node)
       }
     });
 }
 
-function _createTabElement(tab: browser.tabs.Tab) {
-  const text = _createTabText(tab);
+function createTabElement(tab: browser.tabs.Tab) {
+  const text = createTabText(tab);
   const node = document.createElement("div");
   node.innerHTML = text;
   node.setAttribute("title", text)
@@ -35,14 +35,14 @@ function _createTabElement(tab: browser.tabs.Tab) {
   return node;
 }
 
-function _getContentBox(): Element {
+function getContentBox(): Element {
   const x = document.querySelector("#content");
   if (x == null)
     throw new Error('no content box???')
   return x
 }
 
-function _createTabText(tab: browser.tabs.Tab): string {
+function createTabText(tab: browser.tabs.Tab): string {
   const id = tab.id?.toString() ?? "undefined";
   const title = tab.title ?? "";
   const window = tab.windowId ?? "?";
