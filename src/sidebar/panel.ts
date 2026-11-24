@@ -1,14 +1,14 @@
 const contentBox = _getContentBox()
-updateContent();
+_updateContent();
 
-browser.tabs.onUpdated.addListener(updateContent);
-browser.tabs.onRemoved.addListener(updateContent);
-browser.tabs.onCreated.addListener(updateContent);
-browser.tabs.onMoved.addListener(updateContent);
+browser.tabs.onUpdated.addListener(_updateContent);
+browser.tabs.onRemoved.addListener(_updateContent);
+browser.tabs.onCreated.addListener(_updateContent);
+browser.tabs.onMoved.addListener(_updateContent);
 
 
-function updateContent() {
-  browser.tabs.query({ })
+function _updateContent() {
+  browser.tabs.query({})
     .then((tabs) => {
       contentBox.innerHTML = '';
       for (const tab of tabs) {
@@ -20,10 +20,10 @@ function updateContent() {
 }
 
 function _createTextElement(text: string) {
-    const node = document.createElement("div");
-    node.innerHTML = text;
-    node.setAttribute("title", text)
-    return node;
+  const node = document.createElement("div");
+  node.innerHTML = text;
+  node.setAttribute("title", text)
+  return node;
 }
 
 function _getContentBox(): Element {
