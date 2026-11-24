@@ -11,15 +11,13 @@ function tabSetActive(changeTo: number) {
   browser.tabs.update(changeTo, { active: true })
 }
 
-function updateContent() {
-  browser.tabs.query({})
-    .then((tabs) => {
-      contentBox.innerHTML = '';
-      for (const tab of tabs) {
-        const node = createTabElement(tab);
-        contentBox.appendChild(node)
-      }
-    });
+async function updateContent() {
+  const tabs = await browser.tabs.query({});
+  contentBox.innerHTML = '';
+  for (const tab of tabs) {
+    const node = createTabElement(tab);
+    contentBox.appendChild(node)
+  }
 }
 
 function createTabElement(tab: browser.tabs.Tab) {
