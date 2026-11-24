@@ -24,12 +24,13 @@ body {
   overflow:hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-#content > :nth-child(odd) {
   background-color: grey;
 }
 
-#content > :nth-child(even) {
-  background-color: darkgrey;
+#content > div[active=current] {
+  background-color: lightgreen;
+}
+
+#content > div[active=other] {
+  background-color: #EE9090;
 }
