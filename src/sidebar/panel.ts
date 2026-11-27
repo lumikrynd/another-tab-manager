@@ -8,10 +8,6 @@ browser.tabs.onMoved.addListener(updateContent);
 browser.tabs.onActivated.addListener(updateContent);
 
 
-function tabSetActive(changeTo: number) {
-  browser.tabs.update(changeTo, { active: true })
-}
-
 async function updateContent() {
   const [tabs, window] = await Promise.all([
     browser.tabs.query({}),
@@ -45,6 +41,10 @@ function createTabElement(
     }
   })
   return node;
+}
+
+function tabSetActive(changeTo: number) {
+  browser.tabs.update(changeTo, { active: true })
 }
 
 function getTabState(tab: browser.tabs.Tab, window: browser.windows.Window) {

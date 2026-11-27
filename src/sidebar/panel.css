@@ -11,20 +11,19 @@ body {
 }
 
 #content {
-  /* height: 100%; */
-  margin: 2em 2em 0 2em;
   border: .5em solid #DDE4E9;
   transition: background-color .2s ease-out;
   background-color: white;
 }
 
 #content > div {
-  border: 2px solid #794B0F;
+  border: 1px solid #DDE4E9;
   transition: background-color .2s ease-out;
   overflow:hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   background-color: grey;
+  cursor: default;
 }
 
 #content > div[state=current] {
